@@ -14,7 +14,9 @@ function startover() {
 	document.getElementById("mistaketext").innerHTML = "0 mistakes";
 	document.getElementById("pitext").innerHTML = "3.";
 	document.getElementById("showdigits").innerHTML = "";
-	document.getElementById("currentdigit").innerHTML = nextdigit;
+	document.getElementById("currentdigit").innerHTML = "0 digits";
+	document.getElementById("mistaketable").innerHTML = "<tr><td>Mistake #</td><td>At Digit #</td></tr>";
+	document.getElementById("wrongnumber").innerHTML = "";
 	digitsshown = false;
 }
 
@@ -27,7 +29,6 @@ function showdigits() {
 		i++;
 	}
 	digitsshown = true;
-	document.getElementById("currentdigit").innerHTML = nextdigit;
 }
 
 function tryifempty(userinput) {
@@ -38,7 +39,11 @@ function tryifempty(userinput) {
 				document.getElementById("pitext").innerHTML = document.getElementById("pitext").innerHTML + storedpi.charAt(nextdigit);
 				document.getElementById("wrongnumber").innerHTML = "";
 				nextdigit++;
-				document.getElementById("currentdigit").innerHTML = nextdigit;
+				if (nextdigit == 1) {
+					document.getElementById("currentdigit").innerHTML = nextdigit + " digit";
+				} else {
+					document.getElementById("currentdigit").innerHTML = nextdigit + " digits";
+				}
 			} else {
 				mistakecount++;
 				document.getElementById("wrongnumber").innerHTML = userinput.charAt(userinput.length - i);
@@ -47,7 +52,7 @@ function tryifempty(userinput) {
 				} else {
 					document.getElementById("mistaketext").innerHTML = mistakecount + " mistakes";
 				}
-				document.getElementById("mistaketable").innerHTML = document.getElementById("mistaketable").innerHTML + "<tr><td>" + mistakecount + "</td><td>" + nextdigit + "</td></tr>";
+				document.getElementById("mistaketable").innerHTML = document.getElementById("mistaketable").innerHTML + "<tr><td>" + mistakecount + "</td><td>" + (nextdigit + 1) + "</td></tr>";
 			}
 			i--;
 		}
