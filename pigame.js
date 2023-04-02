@@ -14,7 +14,7 @@ function startover() {
 	nextdigit = 0;
 	correctdigits = 0;
 	mistakecount = 0;
-	pitext = "3.";
+	pitext = "<text style='color: #00bf00;'>3.</text>";
 	limitreached = false;
 	document.getElementById("pitext").innerHTML = pitext;
 	document.getElementById("limitreached").style.display = "none";
@@ -59,7 +59,7 @@ function tryifempty(userinput) {
 			}
 		} else {
 			mistakecount++;
-			document.getElementById("pitext").innerHTML = pitext + "<text style='color: #bf0000';>" + userinput.charAt(userinput.length - i); + "</text";
+			document.getElementById("pitext").innerHTML = pitext + "<text style='color: #bf0000;'>" + userinput.charAt(userinput.length - i); + "</text";
 			if (mistakecount == 1) {
 				document.getElementById("mistaketext").innerHTML = mistakecount + " mistake";
 			} else {
