@@ -6,6 +6,7 @@ document.addEventListener("keyup", function(event) {
 var nextdigit = 0;
 var correctdigits = 0;
 var mistakecount = 0;
+var digitsshown = 0;
 var pitext = "";
 var limitreached = false;
 startover();
@@ -14,23 +15,26 @@ function startover() {
 	nextdigit = 0;
 	correctdigits = 0;
 	mistakecount = 0;
-	pitext = "<text style='color: #00bf00;'>3.</text>";
+	digitsshown = 0;
 	limitreached = false;
-	document.getElementById("pitext").innerHTML = pitext;
+	document.getElementById("pitext").innerHTML = "3.";
 	document.getElementById("limitreached").style.display = "none";
 	document.getElementById("currentdigit").innerHTML = "digit 1";
 	document.getElementById("correctdigits").innerHTML = "0 digits";
-	document.getElementById("mistaketext").innerHTML = "0 mistakes";
+	document.getElementById("mistaketext").innerHTML = "0 digits";
+	document.getElementById("digitsshown").innerHTML = "0 digits";
 	document.getElementById("mistaketable").innerHTML = "<tr><td>Mistake #</td><td>At digit #</td></tr>";
+	pitext = "3.<text style='color: #00bf00;'>";
 }
 
 function showdigits(digitstoshow) {
 	if (digitstoshow > 0) {
 		var i = 0;
-		pitext = pitext + "<text style='color: #00bf00;'>";
+		pitext = pitext + "</text><text style='color: #0000bf;'>";
 		while (i < digitstoshow && !limitreached) {
 			pitext = pitext + storedpi.charAt(nextdigit);
 			nextdigit++;
+			digitsshown++;
 			i++;
 			if (nextdigit >= storedpi.length) {
 				limitreached = true;
@@ -40,6 +44,12 @@ function showdigits(digitstoshow) {
 		pitext = pitext + "</text>";
 		document.getElementById("pitext").innerHTML = pitext;
 		document.getElementById("currentdigit").innerHTML = "digit " + (nextdigit + 1);
+		if (digitsshown == 1) {
+			document.getElementById("digitsshown").innerHTML = digitsshown + " digit";
+		} else {
+			document.getElementById("digitsshown").innerHTML = digitsshown + " digits";
+		}
+		pitext = pitext + "<text style='color: #00bf00;'>";
 	}
 }
 
@@ -48,7 +58,7 @@ function tryifempty(userinput) {
 	while (i != 0 && !limitreached) {
 		if (userinput.charAt(userinput.length - i) == storedpi.charAt(nextdigit)) {
 			pitext = pitext + storedpi.charAt(nextdigit);
-			document.getElementById("pitext").innerHTML = pitext;
+			document.getElementById("pitext").innerHTML = pitext + "</text>";
 			correctdigits++;
 			nextdigit++;
 			document.getElementById("currentdigit").innerHTML = "digit " + (nextdigit + 1);
@@ -59,11 +69,11 @@ function tryifempty(userinput) {
 			}
 		} else {
 			mistakecount++;
-			document.getElementById("pitext").innerHTML = pitext + "<text style='color: #bf0000;'>" + userinput.charAt(userinput.length - i); + "</text";
+			document.getElementById("pitext").innerHTML = pitext + "</text><text style='color: #bf0000;'>" + userinput.charAt(userinput.length - i); + "</text";
 			if (mistakecount == 1) {
-				document.getElementById("mistaketext").innerHTML = mistakecount + " mistake";
+				document.getElementById("mistaketext").innerHTML = mistakecount + " digit";
 			} else {
-				document.getElementById("mistaketext").innerHTML = mistakecount + " mistakes";
+				document.getElementById("mistaketext").innerHTML = mistakecount + " digits";
 			}
 			document.getElementById("mistaketable").innerHTML = document.getElementById("mistaketable").innerHTML + "<tr><td>" + mistakecount + "</td><td>" + (nextdigit + 1) + "</td></tr>";
 		}
