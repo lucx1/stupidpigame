@@ -4,58 +4,63 @@ document.addEventListener("keyup", function(event) {
 });
 
 var nextdigit = 0;
+var correctdigits = 0;
 var mistakecount = 0;
-var digitsshown = false;
+var pitext = "";
 startover();
 
 function startover() {
 	nextdigit = 0;
+	correctdigits = 0;
 	mistakecount = 0;
+	pitext = "3.";
+	document.getElementById("pitext").innerHTML = pitext;
+	document.getElementById("currentdigit").innerHTML = "digit 1";
+	document.getElementById("correctdigits").innerHTML = "0 digits";
 	document.getElementById("mistaketext").innerHTML = "0 mistakes";
-	document.getElementById("pitext").innerHTML = "3.";
-	document.getElementById("showdigits").innerHTML = "";
-	document.getElementById("currentdigit").innerHTML = "0 digits";
-	document.getElementById("mistaketable").innerHTML = "<tr><td>Mistake #</td><td>At Digit #</td></tr>";
-	document.getElementById("wrongnumber").innerHTML = "";
-	digitsshown = false;
+	document.getElementById("mistaketable").innerHTML = "<tr><td>Mistake #</td><td>At digit #</td></tr>";
 }
 
-function showdigits() {
-	var i = 0;
-	document.getElementById("wrongnumber").innerHTML = "";
-	while (i < 100) {
-		document.getElementById("showdigits").innerHTML = document.getElementById("showdigits").innerHTML + storedpi.charAt(nextdigit);
-		nextdigit++;
-		i++;
+function showdigits(digitstoshow) {
+	if (digitstoshow > 0) {
+		var i = 0;
+		pitext = pitext + "<text style='color: #00bf00;'>";
+		while (i < digitstoshow) {
+			pitext = pitext + storedpi.charAt(nextdigit);
+			nextdigit++;
+			i++;
+		}
+		pitext = pitext + "</text>";
+		document.getElementById("pitext").innerHTML = pitext;
+		document.getElementById("currentdigit").innerHTML = "digit " + (nextdigit + 1);
 	}
-	digitsshown = true;
 }
 
 function tryifempty(userinput) {
-	if (!digitsshown) {
-		var i = userinput.length;
-		while (i != 0) {
-			if (userinput.charAt(userinput.length - i) == storedpi.charAt(nextdigit)) {
-				document.getElementById("pitext").innerHTML = document.getElementById("pitext").innerHTML + storedpi.charAt(nextdigit);
-				document.getElementById("wrongnumber").innerHTML = "";
-				nextdigit++;
-				if (nextdigit == 1) {
-					document.getElementById("currentdigit").innerHTML = nextdigit + " digit";
-				} else {
-					document.getElementById("currentdigit").innerHTML = nextdigit + " digits";
-				}
+	var i = userinput.length;
+	while (i != 0) {
+		if (userinput.charAt(userinput.length - i) == storedpi.charAt(nextdigit)) {
+			pitext = pitext + storedpi.charAt(nextdigit);
+			document.getElementById("pitext").innerHTML = pitext;
+			correctdigits++;
+			nextdigit++;
+			document.getElementById("currentdigit").innerHTML = "digit " + (nextdigit + 1);
+			if (nextdigit == 1) {
+				document.getElementById("correctdigits").innerHTML = correctdigits + " digit";
 			} else {
-				mistakecount++;
-				document.getElementById("wrongnumber").innerHTML = userinput.charAt(userinput.length - i);
-				if (mistakecount == 1) {
-					document.getElementById("mistaketext").innerHTML = mistakecount + " mistake";
-				} else {
-					document.getElementById("mistaketext").innerHTML = mistakecount + " mistakes";
-				}
-				document.getElementById("mistaketable").innerHTML = document.getElementById("mistaketable").innerHTML + "<tr><td>" + mistakecount + "</td><td>" + (nextdigit + 1) + "</td></tr>";
+				document.getElementById("correctdigits").innerHTML = correctdigits + " digits";
 			}
-			i--;
+		} else {
+			mistakecount++;
+			document.getElementById("pitext").innerHTML = document.getElementById("pitext").innerHTML + "<text style='color: #bf0000';>" + userinput.charAt(userinput.length - i); + "</text";
+			if (mistakecount == 1) {
+				document.getElementById("mistaketext").innerHTML = mistakecount + " mistake";
+			} else {
+				document.getElementById("mistaketext").innerHTML = mistakecount + " mistakes";
+			}
+			document.getElementById("mistaketable").innerHTML = document.getElementById("mistaketable").innerHTML + "<tr><td>" + mistakecount + "</td><td>" + (nextdigit + 1) + "</td></tr>";
 		}
+		i--;
 	}
 	document.getElementById("userinput").value = "";
 }
