@@ -21,7 +21,7 @@ function startover() {
 	document.getElementById("limitreached").style.display = "none";
 	document.getElementById("currentdigit").innerHTML = "digit 1";
 	document.getElementById("correctdigits").innerHTML = "0 digits";
-	document.getElementById("mistaketext").innerHTML = "0 digits";
+	document.getElementById("mistaketext").innerHTML = "0 mistakes";
 	document.getElementById("digitsshown").innerHTML = "0 digits";
 	document.getElementById("mistaketable").innerHTML = "<tr><td>Mistake #</td><td>At digit #</td></tr>";
 	pitext = "3.<text style='color: #00bf00;'>";
@@ -71,9 +71,9 @@ function tryifempty(userinput) {
 			mistakecount++;
 			document.getElementById("pitext").innerHTML = pitext + "</text><text style='color: #bf0000;'>" + userinput.charAt(userinput.length - i); + "</text";
 			if (mistakecount == 1) {
-				document.getElementById("mistaketext").innerHTML = mistakecount + " digit";
+				document.getElementById("mistaketext").innerHTML = mistakecount + " mistake";
 			} else {
-				document.getElementById("mistaketext").innerHTML = mistakecount + " digits";
+				document.getElementById("mistaketext").innerHTML = mistakecount + " mistakes";
 			}
 			document.getElementById("mistaketable").innerHTML = document.getElementById("mistaketable").innerHTML + "<tr><td>" + mistakecount + "</td><td>" + (nextdigit + 1) + "</td></tr>";
 		}
