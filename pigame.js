@@ -52,7 +52,7 @@ function tryifempty(userinput) {
 			}
 		} else {
 			mistakecount++;
-			document.getElementById("pitext").innerHTML = document.getElementById("pitext").innerHTML + "<text style='color: #bf0000';>" + userinput.charAt(userinput.length - i); + "</text";
+			document.getElementById("pitext").innerHTML = pitext + "<text style='color: #bf0000';>" + userinput.charAt(userinput.length - i); + "</text";
 			if (mistakecount == 1) {
 				document.getElementById("mistaketext").innerHTML = mistakecount + " mistake";
 			} else {
